@@ -1,0 +1,507 @@
+const express = require("express");
+const fs = require("fs").promises;
+const path = require("path");
+
+const app = express();
+const PORT = process.env.PORT || 3000;
+
+const DATA_DIR = path.join(__dirname, "data");
+const PUBLIC_DIR = path.join(__dirname, "public");
+const LOST_FOUND_FILE = path.join(DATA_DIR, "lostfound.json");
+const FEEDBACK_FILE = path.join(DATA_DIR, "feedback.json");
+const CAREERS_FILE = path.join(DATA_DIR, "careers.json");
+
+const careerSeed = [
+  {
+    id: "cse",
+    title: "Computer Science & Engineering",
+    intro:
+      "A practical roadmap for students interested in software engineering, web development, data science, and product-building careers.",
+    stages: [
+      {
+        phase: "Year 1",
+        title: "Build the foundation",
+        details: [
+          "Learn programming basics with C, C++, or Python.",
+          "Understand problem solving, algorithms, and version control.",
+          "Start basic HTML, CSS, and JavaScript projects."
+        ]
+      },
+      {
+        phase: "Year 2",
+        title: "Grow your technical toolkit",
+        details: [
+          "Study data structures, OOP, databases, and operating systems.",
+          "Build CRUD projects with frontend and backend technologies.",
+          "Join programming contests, clubs, or hackathons."
+        ]
+      },
+      {
+        phase: "Year 3",
+        title: "Specialize and gain experience",
+        details: [
+          "Choose a track like web, app, AI, cybersecurity, or data science.",
+          "Create portfolio projects and deploy them online.",
+          "Apply for internships and contribute to team projects."
+        ]
+      },
+      {
+        phase: "Year 4",
+        title: "Prepare for industry",
+        details: [
+          "Practice interview questions, system design, and resume writing.",
+          "Strengthen GitHub, LinkedIn, and final year project quality.",
+          "Target junior developer, QA, data analyst, or support engineer roles."
+        ]
+      }
+    ],
+    skills: ["Programming", "DSA", "Databases", "APIs", "Testing", "Problem Solving"],
+    tools: ["Git", "GitHub", "VS Code", "Node.js", "MySQL", "Postman"],
+    courses: ["Data Structures", "Database Systems", "Software Engineering", "AI Fundamentals"],
+    roles: ["Software Engineer", "Frontend Developer", "Backend Developer", "QA Engineer", "Data Analyst"]
+  },
+  {
+    id: "bba",
+    title: "Business Administration",
+    intro:
+      "A structured roadmap for students aiming for careers in management, marketing, finance, entrepreneurship, and business analytics.",
+    stages: [
+      {
+        phase: "Year 1",
+        title: "Understand business basics",
+        details: [
+          "Learn accounting, principles of management, and business communication.",
+          "Improve presentation, writing, and teamwork skills.",
+          "Explore business case studies and student organizations."
+        ]
+      },
+      {
+        phase: "Year 2",
+        title: "Develop analytical thinking",
+        details: [
+          "Study marketing, finance, HR, and organizational behavior.",
+          "Use spreadsheets for data analysis and reporting.",
+          "Take part in case competitions and business simulations."
+        ]
+      },
+      {
+        phase: "Year 3",
+        title: "Choose a career path",
+        details: [
+          "Focus on finance, HR, marketing, supply chain, or entrepreneurship.",
+          "Build internship experience in relevant industries.",
+          "Learn reporting tools and market research techniques."
+        ]
+      },
+      {
+        phase: "Year 4",
+        title: "Get career ready",
+        details: [
+          "Prepare a polished CV, LinkedIn, and interview answers.",
+          "Work on capstone projects and business presentations.",
+          "Apply for management trainee, analyst, coordinator, or executive roles."
+        ]
+      }
+    ],
+    skills: ["Communication", "Presentation", "Data Analysis", "Leadership", "Market Research", "Decision Making"],
+    tools: ["Excel", "PowerPoint", "Google Sheets", "Canva", "SPSS"],
+    courses: ["Marketing Management", "Corporate Finance", "Business Analytics", "Human Resource Management"],
+    roles: ["Management Trainee", "Marketing Executive", "HR Officer", "Business Analyst", "Sales Coordinator"]
+  },
+  {
+    id: "eee",
+    title: "Electrical & Electronic Engineering",
+    intro:
+      "A roadmap for students who want careers in power systems, embedded systems, telecom, automation, or industrial engineering.",
+    stages: [
+      {
+        phase: "Year 1",
+        title: "Strengthen core science",
+        details: [
+          "Focus on mathematics, physics, circuits, and electrical fundamentals.",
+          "Learn basic circuit analysis and laboratory safety.",
+          "Document experiments and technical observations carefully."
+        ]
+      },
+      {
+        phase: "Year 2",
+        title: "Build technical competence",
+        details: [
+          "Study electronics, signals, machines, and digital logic.",
+          "Practice simulation software and breadboard prototyping.",
+          "Work on simple IoT and automation mini-projects."
+        ]
+      },
+      {
+        phase: "Year 3",
+        title: "Explore specialization",
+        details: [
+          "Choose among power, control systems, embedded systems, telecom, or robotics.",
+          "Take industry visits, technical workshops, and certifications.",
+          "Create project demos using sensors, controllers, or communication modules."
+        ]
+      },
+      {
+        phase: "Year 4",
+        title: "Prepare for professional roles",
+        details: [
+          "Develop a strong final year project with real-world application.",
+          "Practice viva, technical interviews, and report writing.",
+          "Apply for trainee engineer, field engineer, or automation roles."
+        ]
+      }
+    ],
+    skills: ["Circuit Design", "Troubleshooting", "Simulation", "Embedded Basics", "Technical Documentation"],
+    tools: ["MATLAB", "Proteus", "Multisim", "Arduino IDE", "AutoCAD Electrical"],
+    courses: ["Power Electronics", "Control Systems", "Microprocessors", "Telecommunication Engineering"],
+    roles: ["Trainee Engineer", "Embedded Engineer", "Power System Engineer", "Automation Engineer", "Field Engineer"]
+  },
+  {
+    id: "english",
+    title: "English & Communication",
+    intro:
+      "A roadmap for students who want careers in writing, teaching, media, communication, content strategy, and research.",
+    stages: [
+      {
+        phase: "Year 1",
+        title: "Build language mastery",
+        details: [
+          "Improve grammar, composition, reading comprehension, and public speaking.",
+          "Read literature, essays, and academic texts regularly.",
+          "Start a writing habit through blogs, journals, or reviews."
+        ]
+      },
+      {
+        phase: "Year 2",
+        title: "Practice communication professionally",
+        details: [
+          "Study linguistics, creative writing, and rhetoric.",
+          "Work on presentation, editing, and critical analysis.",
+          "Participate in debate clubs, publications, or event hosting."
+        ]
+      },
+      {
+        phase: "Year 3",
+        title: "Choose your direction",
+        details: [
+          "Explore teaching, research, journalism, content writing, or public relations.",
+          "Build writing samples and communication portfolios.",
+          "Take internships in schools, agencies, media houses, or editorial teams."
+        ]
+      },
+      {
+        phase: "Year 4",
+        title: "Launch your career",
+        details: [
+          "Prepare for teaching demos, writing tests, and interviews.",
+          "Refine your CV and create a digital portfolio of work.",
+          "Apply for roles in education, media, publishing, or corporate communication."
+        ]
+      }
+    ],
+    skills: ["Writing", "Editing", "Presentation", "Research", "Critical Thinking", "Public Speaking"],
+    tools: ["Google Docs", "Canva", "Grammarly", "MS Word", "PowerPoint"],
+    courses: ["Creative Writing", "Linguistics", "Communication Studies", "Research Methodology"],
+    roles: ["Content Writer", "Lecturer", "Editor", "PR Executive", "Research Assistant"]
+  }
+];
+
+const lostFoundSeed = [
+  {
+    id: "LF-1001",
+    type: "lost",
+    title: "Student ID Card",
+    category: "Documents",
+    location: "Library 2nd Floor",
+    date: "2026-03-18",
+    contact: "studenthelp@univoice.edu",
+    description: "Blue card holder with CSE department student ID.",
+    status: "open",
+    createdAt: "2026-03-18T10:00:00.000Z"
+  },
+  {
+    id: "LF-1002",
+    type: "found",
+    title: "Black Water Bottle",
+    category: "Accessories",
+    location: "Main Cafeteria",
+    date: "2026-03-20",
+    contact: "campusdesk@univoice.edu",
+    description: "Matte black bottle left on a corner table.",
+    status: "open",
+    createdAt: "2026-03-20T08:30:00.000Z"
+  },
+  {
+    id: "LF-1003",
+    type: "found",
+    title: "Scientific Calculator",
+    category: "Electronics",
+    location: "EEE Lab Building",
+    date: "2026-03-22",
+    contact: "lab.assistant@univoice.edu",
+    description: "Calculator found after afternoon lab session.",
+    status: "open",
+    createdAt: "2026-03-22T11:15:00.000Z"
+  }
+];
+
+const feedbackSeed = [
+  {
+    id: "FB-1001",
+    department: "CSE",
+    courseCode: "CSE-221",
+    courseTitle: "Data Structures",
+    rating: 5,
+    message: "The lab tasks were practical and helped me understand linked lists and trees clearly.",
+    createdAt: "2026-03-19T07:00:00.000Z"
+  },
+  {
+    id: "FB-1002",
+    department: "BBA",
+    courseCode: "MKT-201",
+    courseTitle: "Marketing Management",
+    rating: 4,
+    message: "The case studies were useful, but more real brand examples would make classes better.",
+    createdAt: "2026-03-21T09:30:00.000Z"
+  },
+  {
+    id: "FB-1003",
+    department: "EEE",
+    courseCode: "EEE-310",
+    courseTitle: "Control Systems",
+    rating: 4,
+    message: "The theory part was strong. More simulation demonstrations would improve understanding.",
+    createdAt: "2026-03-22T06:45:00.000Z"
+  }
+];
+
+app.use(express.json());
+app.use(express.static(PUBLIC_DIR));
+
+async function ensureDataFiles() {
+  await fs.mkdir(DATA_DIR, { recursive: true });
+
+  await ensureFile(CAREERS_FILE, careerSeed);
+  await ensureFile(LOST_FOUND_FILE, lostFoundSeed);
+  await ensureFile(FEEDBACK_FILE, feedbackSeed);
+}
+
+async function ensureFile(filePath, defaultData) {
+  try {
+    await fs.access(filePath);
+  } catch (error) {
+    await fs.writeFile(filePath, JSON.stringify(defaultData, null, 2), "utf-8");
+  }
+}
+
+async function readJson(filePath, fallback = []) {
+  try {
+    const raw = await fs.readFile(filePath, "utf-8");
+    return JSON.parse(raw);
+  } catch (error) {
+    return fallback;
+  }
+}
+
+async function writeJson(filePath, data) {
+  await fs.writeFile(filePath, JSON.stringify(data, null, 2), "utf-8");
+}
+
+function generateId(prefix) {
+  return `${prefix}-${Date.now()}`;
+}
+
+function normalize(text = "") {
+  return String(text).trim().toLowerCase();
+}
+
+function calculateFeedbackSummary(feedback) {
+  const totalFeedback = feedback.length;
+  const averageRating =
+    totalFeedback === 0
+      ? 0
+      : feedback.reduce((sum, item) => sum + Number(item.rating || 0), 0) / totalFeedback;
+
+  const courseMap = new Map();
+
+  feedback.forEach((item) => {
+    const key = `${item.courseCode} | ${item.courseTitle}`;
+    if (!courseMap.has(key)) {
+      courseMap.set(key, { count: 0, ratingTotal: 0, courseCode: item.courseCode, courseTitle: item.courseTitle });
+    }
+    const course = courseMap.get(key);
+    course.count += 1;
+    course.ratingTotal += Number(item.rating || 0);
+  });
+
+  let topCourse = null;
+  for (const course of courseMap.values()) {
+    const avg = course.ratingTotal / course.count;
+    if (!topCourse || avg > topCourse.avg || (avg === topCourse.avg && course.count > topCourse.count)) {
+      topCourse = { ...course, avg };
+    }
+  }
+
+  return {
+    totalFeedback,
+    averageRating: Number(averageRating.toFixed(1)),
+    topCourse: topCourse
+      ? {
+          label: `${topCourse.courseCode} - ${topCourse.courseTitle}`,
+          average: Number(topCourse.avg.toFixed(1)),
+          responses: topCourse.count
+        }
+      : null
+  };
+}
+
+app.get("/api/stats", async (req, res) => {
+  const lostFound = await readJson(LOST_FOUND_FILE, []);
+  const feedback = await readJson(FEEDBACK_FILE, []);
+  const careers = await readJson(CAREERS_FILE, []);
+
+  const openCases = lostFound.filter((item) => item.status === "open").length;
+  const foundPosts = lostFound.filter((item) => item.type === "found").length;
+
+  res.json({
+    openCases,
+    foundPosts,
+    feedbackCount: feedback.length,
+    careerPaths: careers.length
+  });
+});
+
+app.get("/api/lostfound", async (req, res) => {
+  const { search = "", type = "all", category = "all" } = req.query;
+  const items = await readJson(LOST_FOUND_FILE, []);
+  const q = normalize(search);
+
+  const filtered = items
+    .filter((item) => {
+      const matchesSearch =
+        !q ||
+        [item.title, item.category, item.location, item.description, item.id]
+          .filter(Boolean)
+          .some((field) => normalize(field).includes(q));
+
+      const matchesType = type === "all" || normalize(item.type) === normalize(type);
+      const matchesCategory = category === "all" || normalize(item.category) === normalize(category);
+
+      return matchesSearch && matchesType && matchesCategory;
+    })
+    .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+
+  res.json(filtered);
+});
+
+app.post("/api/lostfound", async (req, res) => {
+  const { type, title, category, location, date, contact, description } = req.body;
+
+  if (!type || !title || !category || !location || !date || !contact || !description) {
+    return res.status(400).json({ message: "Please fill in all lost and found fields." });
+  }
+
+  const items = await readJson(LOST_FOUND_FILE, []);
+  const newItem = {
+    id: generateId("LF"),
+    type: normalize(type),
+    title: String(title).trim(),
+    category: String(category).trim(),
+    location: String(location).trim(),
+    date: String(date).trim(),
+    contact: String(contact).trim(),
+    description: String(description).trim(),
+    status: "open",
+    createdAt: new Date().toISOString()
+  };
+
+  items.unshift(newItem);
+  await writeJson(LOST_FOUND_FILE, items);
+
+  res.status(201).json({ message: "Lost/Found post created successfully.", item: newItem });
+});
+
+app.patch("/api/lostfound/:id/resolve", async (req, res) => {
+  const items = await readJson(LOST_FOUND_FILE, []);
+  const index = items.findIndex((item) => item.id === req.params.id);
+
+  if (index === -1) {
+    return res.status(404).json({ message: "Item not found." });
+  }
+
+  items[index].status = "resolved";
+  await writeJson(LOST_FOUND_FILE, items);
+
+  res.json({ message: "Item marked as resolved.", item: items[index] });
+});
+
+app.get("/api/careers", async (req, res) => {
+  const careers = await readJson(CAREERS_FILE, careerSeed);
+  res.json(careers);
+});
+
+app.get("/api/careers/:id", async (req, res) => {
+  const careers = await readJson(CAREERS_FILE, careerSeed);
+  const career = careers.find((item) => normalize(item.id) === normalize(req.params.id));
+
+  if (!career) {
+    return res.status(404).json({ message: "Career roadmap not found." });
+  }
+
+  res.json(career);
+});
+
+app.get("/api/feedback", async (req, res) => {
+  const feedback = await readJson(FEEDBACK_FILE, []);
+  const sorted = feedback.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+  res.json(sorted);
+});
+
+app.get("/api/feedback/summary", async (req, res) => {
+  const feedback = await readJson(FEEDBACK_FILE, []);
+  res.json(calculateFeedbackSummary(feedback));
+});
+
+app.post("/api/feedback", async (req, res) => {
+  const { department, courseCode, courseTitle, rating, message } = req.body;
+
+  if (!department || !courseCode || !courseTitle || !rating || !message) {
+    return res.status(400).json({ message: "Please fill in all feedback fields." });
+  }
+
+  const numericRating = Number(rating);
+  if (Number.isNaN(numericRating) || numericRating < 1 || numericRating > 5) {
+    return res.status(400).json({ message: "Rating must be between 1 and 5." });
+  }
+
+  const feedback = await readJson(FEEDBACK_FILE, []);
+  const newFeedback = {
+    id: generateId("FB"),
+    department: String(department).trim(),
+    courseCode: String(courseCode).trim(),
+    courseTitle: String(courseTitle).trim(),
+    rating: numericRating,
+    message: String(message).trim(),
+    createdAt: new Date().toISOString()
+  };
+
+  feedback.unshift(newFeedback);
+  await writeJson(FEEDBACK_FILE, feedback);
+
+  res.status(201).json({ message: "Anonymous feedback submitted successfully.", item: newFeedback });
+});
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(PUBLIC_DIR, "index.html"));
+});
+
+ensureDataFiles()
+  .then(() => {
+    app.listen(PORT, () => {
+      console.log(`UniVoice Hub is running on http://localhost:${PORT}`);
+    });
+  })
+  .catch((error) => {
+    console.error("Failed to initialize the application:", error);
+    process.exit(1);
+  });

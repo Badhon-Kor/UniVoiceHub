@@ -1,0 +1,95 @@
+const playArea = document.getElementById('play-area');
+const scoreSpan = document.getElementById('score');
+const timerSpan = document.getElementById('timer');
+const startBtn = document.getElementById('startBtn');
+const playAgainBtn = document.getElementById('playAgainBtn');
+const pauseBtn = document.getElementById('pauseBtn');
+const levelSelect = document.getElementById('level');
+
+const scoreBox = document.getElementById('score-box');
+const finalScore = document.getElementById('final-score');
+const replayBtn = document.getElementById('replayBtn');
+
+let score = 0;
+let time = 30;
+let interval;
+let targetInterval;
+let paused = false;
+
+const gameSettings = {
+    beginner: { totalTargets: 15, points: 1 },
+    pro: { totalTargets: 30, points: 2 },
+    legend: { totalTargets: 45, points: 3 }
+};
+
+function randomPosition(max) {
+    return Math.floor(Math.random() * max);
+}
+
+function createTarget() {
+    playArea.innerHTML = '';
+    const circle = document.createElement('div');
+    circle.classList.add('circle', 'target');
+    circle.style.top = randomPosition(playArea.clientHeight - 50) + 'px';
+    circle.style.left = randomPosition(playArea.clientWidth - 50) + 'px';
+    playArea.appendChild(circle);
+
+    circle.addEventListener('click', () => {
+        score += gameSettings[levelSelect.value].points;
+        scoreSpan.textContent = score;
+        circle.remove();
+    });
+}
+
+function startGame() {
+    clearInterval(interval);
+    clearInterval(targetInterval);
+    playArea.innerHTML = '';
+    scoreBox.style.display = 'none';
+    paused = false;
+    pauseBtn.textContent = 'Pause';
+
+    score = 0;
+    time = 30;
+    scoreSpan.textContent = score;
+    timerSpan.textContent = time;
+
+    const level = levelSelect.value;
+    const targetsToSpawn = gameSettings[level].totalTargets;
+    const spawnInterval = 30000 / targetsToSpawn;
+
+    let spawnedTargets = 0;
+
+    targetInterval = setInterval(() => {
+        if (!paused && spawnedTargets < targetsToSpawn) {
+            createTarget();
+            spawnedTargets++;
+        }
+    }, spawnInterval);
+
+    interval = setInterval(() => {
+        if (!paused) {
+            time--;
+            timerSpan.textContent = time;
+            if (time <= 0) {
+                clearInterval(interval);
+                clearInterval(targetInterval);
+                playArea.innerHTML = '';
+                finalScore.textContent = score;
+                scoreBox.style.display = 'block';
+            }
+        }
+    }, 1000);
+}
+
+// Buttons
+startBtn.addEventListener('click', startGame);
+playAgainBtn.addEventListener('click', startGame);
+replayBtn.addEventListener('click', startGame);
+function goHome() {
+  window.location.href = "home.html"; 
+}
+pauseBtn.addEventListener('click', () => {
+    paused = !paused;
+    pauseBtn.textContent = paused ? 'Resume' : 'Pause';
+});

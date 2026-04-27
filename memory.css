@@ -1,0 +1,38 @@
+[
+  {
+    "id": "LF-1001",
+    "type": "lost",
+    "title": "Student ID Card",
+    "category": "Documents",
+    "location": "Library 2nd Floor",
+    "date": "2026-03-18",
+    "contact": "studenthelp@univoice.edu",
+    "description": "Blue card holder with CSE department student ID.",
+    "status": "open",
+    "createdAt": "2026-03-18T10:00:00.000Z"
+  },
+  {
+    "id": "LF-1002",
+    "type": "found",
+    "title": "Black Water Bottle",
+    "category": "Accessories",
+    "location": "Main Cafeteria",
+    "date": "2026-03-20",
+    "contact": "campusdesk@univoice.edu",
+    "description": "Matte black bottle left on a corner table.",
+    "status": "open",
+    "createdAt": "2026-03-20T08:30:00.000Z"
+  },
+  {
+    "id": "LF-1003",
+    "type": "found",
+    "title": "Scientific Calculator",
+    "category": "Electronics",
+    "location": "EEE Lab Building",
+    "date": "2026-03-22",
+    "contact": "lab.assistant@univoice.edu",
+    "description": "Calculator found after afternoon lab session.",
+    "status": "open",
+    "createdAt": "2026-03-22T11:15:00.000Z"
+  }
+]

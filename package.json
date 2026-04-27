@@ -1,0 +1,94 @@
+let sequence = [];
+let level = 1;
+
+const sequenceDisplay = document.getElementById('sequence-display');
+const userInput = document.getElementById('user-input');
+const submitBtn = document.getElementById('submit-btn');
+const playAgainBtn = document.getElementById('play-again-btn');
+const levelDisplay = document.getElementById('level');
+const message = document.getElementById('message');
+
+// Generate random number 0-9 avoiding consecutive repeats
+function generateNumber() {
+    let num;
+    do {
+        num = Math.floor(Math.random() * 10);
+    } while (sequence.length && num === sequence[sequence.length - 1]);
+    return num;
+}
+
+// Show only the new number
+function showNewNumber() {
+    const newNumber = sequence[sequence.length - 1];
+    sequenceDisplay.textContent = newNumber;
+    userInput.value = '';
+    userInput.disabled = true;
+
+    setTimeout(() => {
+        sequenceDisplay.textContent = '';
+        userInput.disabled = false;
+        userInput.focus();
+    }, 1000);
+}
+
+// Next level
+function nextLevel() {
+    sequence.push(generateNumber());
+    levelDisplay.textContent = level;
+    showNewNumber();
+}
+
+// Show popup message
+function showMessage(text, type) {
+    message.textContent = text;
+    message.className = type; // 'correct' or 'wrong'
+    setTimeout(() => {
+        message.className = '';
+        message.textContent = '';
+    }, 1500);
+}
+
+// Submit button
+submitBtn.addEventListener('click', () => {
+    const input = userInput.value.split('').map(Number);
+
+    // Check input
+    if (input.length !== sequence.length || input.some((val, idx) => val !== sequence[idx])) {
+        // Show wrong message first
+        showMessage(`Wrong! Correct sequence: ${sequence.join('')}`, 'wrong');
+
+        // Delay reset so message is visible
+        setTimeout(() => {
+            resetGame();
+        }, 1500); // match message duration
+        return;
+    }
+
+    // Correct input
+    showMessage('Correct! Next number...', 'correct');
+    level++;
+    setTimeout(nextLevel, 1000);
+});
+
+// Enter key submits
+userInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') submitBtn.click();
+});
+
+// Play Again button
+playAgainBtn.addEventListener('click', resetGame);
+
+// Reset game
+function resetGame() {
+    sequence = [];
+    level = 1;
+    levelDisplay.textContent = level;
+    message.textContent = '';
+    nextLevel();
+}
+function goHome() {
+  window.location.href = "home.html"; 
+}
+
+// Start game
+nextLevel();

@@ -1,0 +1,187 @@
+let pattern = [];
+let userInput = [];
+let level = 1;
+let score = 0;
+let gridSize = 3;
+let isPlaying = false;
+let isPaused = false;
+let canClick = false;
+
+const grid = document.getElementById("grid");
+const levelDisplay = document.getElementById("level");
+const scoreDisplay = document.getElementById("score");
+const message = document.getElementById("message");
+
+document.getElementById("startBtn").onclick = startGame;
+document.getElementById("pauseBtn").onclick = pauseGame;
+document.getElementById("resetBtn").onclick = resetGame;
+
+function createGrid(size) {
+    grid.innerHTML = "";
+    grid.style.gridTemplateColumns = `repeat(${size}, 70px)`;
+
+    for (let i = 0; i < size * size; i++) {
+        const tile = document.createElement("div");
+        tile.classList.add("tile");
+        tile.dataset.index = i;
+
+        tile.onclick = () => handleUserClick(i);
+
+        grid.appendChild(tile);
+    }
+}
+
+function startGame() {
+    resetGame();
+    isPlaying = true;
+    message.textContent = "Watch carefully...";
+    nextLevel();
+}
+
+function resetGame() {
+    pattern = [];
+    userInput = [];
+    level = 1;
+    score = 0;
+    gridSize = 3;
+    isPlaying = false;
+    isPaused = false;
+    canClick = false;
+
+    updateUI();
+    createGrid(gridSize);
+    message.textContent = "Press Start to Play";
+}
+
+function pauseGame() {
+    if (!isPlaying) return;
+
+    isPaused = !isPaused;
+    message.textContent = isPaused ? "Paused" : "Resumed";
+}
+
+function nextLevel() {
+    userInput = [];
+    levelDisplay.textContent = level;
+
+    if (level === 4) gridSize = 4;
+    if (level === 7) gridSize = 5;
+
+    createGrid(gridSize);
+    generatePattern();
+}
+
+function generatePattern() {
+    const max = gridSize * gridSize;
+    const randomIndex = Math.floor(Math.random() * max);
+    pattern.push(randomIndex);
+
+    showPattern();
+}
+
+function showPattern() {
+    let i = 0;
+    canClick = false;
+
+    const tiles = document.querySelectorAll(".tile");
+
+    const interval = setInterval(() => {
+        if (i >= pattern.length) {
+            clearInterval(interval);
+            canClick = true;
+            message.textContent = "Your turn!";
+            return;
+        }
+
+        const index = pattern[i];
+        tiles[index].classList.add("active");
+
+        setTimeout(() => {
+            tiles[index].classList.remove("active");
+        }, 400);
+
+        i++;
+    }, Math.max(300, 700 - level * 20));
+}
+
+function handleUserClick(index) {
+    if (!canClick || isPaused) return;
+
+    userInput.push(index);
+
+    const tiles = document.querySelectorAll(".tile");
+
+    tiles[index].classList.add("correct");
+    setTimeout(() => {
+        tiles[index].classList.remove("correct");
+    }, 200);
+
+    checkAnswer(index, userInput.length - 1);
+}
+
+function checkAnswer(clickedIndex, step) {
+    if (clickedIndex !== pattern[step]) {
+        gameOver(clickedIndex);
+        return;
+    }
+
+    if (userInput.length === pattern.length) {
+        score += 10;
+        level++;
+        updateUI();
+
+        message.textContent = "Correct!";
+        setTimeout(nextLevel, 800);
+    }
+}
+
+function gameOver(wrongIndex) {
+    message.textContent = "Wrong move!";
+    isPlaying = false;
+    canClick = false;
+
+    const tiles = document.querySelectorAll(".tile");
+
+    // Step 1: Wrong tile turns red
+    tiles[wrongIndex].classList.add("wrong");
+
+    setTimeout(() => {
+        tiles[wrongIndex].classList.remove("wrong");
+
+        // Step 2: Show correct pattern one by one
+        let i = 0;
+
+        const interval = setInterval(() => {
+            if (i >= pattern.length) {
+                clearInterval(interval);
+                message.textContent = "Game Over!";
+                return;
+            }
+
+            const idx = pattern[i];
+
+            // Glow effect
+            tiles[idx].classList.add("active");
+
+            setTimeout(() => {
+                tiles[idx].classList.remove("active");
+
+                // Keep tile permanently green
+                tiles[idx].classList.add("correct");
+            }, 400);
+
+            i++;
+        }, 600);
+
+    }, 500);
+}
+function goHome() {
+  window.location.href = "home.html";
+}
+function updateUI() {
+    levelDisplay.textContent = level;
+    scoreDisplay.textContent = score;
+}
+
+// Initialize
+createGrid(gridSize);

@@ -1,0 +1,190 @@
+[
+  {
+    "id": "cse",
+    "title": "Computer Science & Engineering",
+    "intro": "A practical roadmap for students interested in software engineering, web development, data science, and product-building careers.",
+    "stages": [
+      {
+        "phase": "Year 1",
+        "title": "Build the foundation",
+        "details": [
+          "Learn programming basics with C, C++, or Python.",
+          "Understand problem solving, algorithms, and version control.",
+          "Start basic HTML, CSS, and JavaScript projects."
+        ]
+      },
+      {
+        "phase": "Year 2",
+        "title": "Grow your technical toolkit",
+        "details": [
+          "Study data structures, OOP, databases, and operating systems.",
+          "Build CRUD projects with frontend and backend technologies.",
+          "Join programming contests, clubs, or hackathons."
+        ]
+      },
+      {
+        "phase": "Year 3",
+        "title": "Specialize and gain experience",
+        "details": [
+          "Choose a track like web, app, AI, cybersecurity, or data science.",
+          "Create portfolio projects and deploy them online.",
+          "Apply for internships and contribute to team projects."
+        ]
+      },
+      {
+        "phase": "Year 4",
+        "title": "Prepare for industry",
+        "details": [
+          "Practice interview questions, system design, and resume writing.",
+          "Strengthen GitHub, LinkedIn, and final year project quality.",
+          "Target junior developer, QA, data analyst, or support engineer roles."
+        ]
+      }
+    ],
+    "skills": ["Programming", "DSA", "Databases", "APIs", "Testing", "Problem Solving"],
+    "tools": ["Git", "GitHub", "VS Code", "Node.js", "MySQL", "Postman"],
+    "courses": ["Data Structures", "Database Systems", "Software Engineering", "AI Fundamentals"],
+    "roles": ["Software Engineer", "Frontend Developer", "Backend Developer", "QA Engineer", "Data Analyst"]
+  },
+  {
+    "id": "bba",
+    "title": "Business Administration",
+    "intro": "A structured roadmap for students aiming for careers in management, marketing, finance, entrepreneurship, and business analytics.",
+    "stages": [
+      {
+        "phase": "Year 1",
+        "title": "Understand business basics",
+        "details": [
+          "Learn accounting, principles of management, and business communication.",
+          "Improve presentation, writing, and teamwork skills.",
+          "Explore business case studies and student organizations."
+        ]
+      },
+      {
+        "phase": "Year 2",
+        "title": "Develop analytical thinking",
+        "details": [
+          "Study marketing, finance, HR, and organizational behavior.",
+          "Use spreadsheets for data analysis and reporting.",
+          "Take part in case competitions and business simulations."
+        ]
+      },
+      {
+        "phase": "Year 3",
+        "title": "Choose a career path",
+        "details": [
+          "Focus on finance, HR, marketing, supply chain, or entrepreneurship.",
+          "Build internship experience in relevant industries.",
+          "Learn reporting tools and market research techniques."
+        ]
+      },
+      {
+        "phase": "Year 4",
+        "title": "Get career ready",
+        "details": [
+          "Prepare a polished CV, LinkedIn, and interview answers.",
+          "Work on capstone projects and business presentations.",
+          "Apply for management trainee, analyst, coordinator, or executive roles."
+        ]
+      }
+    ],
+    "skills": ["Communication", "Presentation", "Data Analysis", "Leadership", "Market Research", "Decision Making"],
+    "tools": ["Excel", "PowerPoint", "Google Sheets", "Canva", "SPSS"],
+    "courses": ["Marketing Management", "Corporate Finance", "Business Analytics", "Human Resource Management"],
+    "roles": ["Management Trainee", "Marketing Executive", "HR Officer", "Business Analyst", "Sales Coordinator"]
+  },
+  {
+    "id": "eee",
+    "title": "Electrical & Electronic Engineering",
+    "intro": "A roadmap for students who want careers in power systems, embedded systems, telecom, automation, or industrial engineering.",
+    "stages": [
+      {
+        "phase": "Year 1",
+        "title": "Strengthen core science",
+        "details": [
+          "Focus on mathematics, physics, circuits, and electrical fundamentals.",
+          "Learn basic circuit analysis and laboratory safety.",
+          "Document experiments and technical observations carefully."
+        ]
+      },
+      {
+        "phase": "Year 2",
+        "title": "Build technical competence",
+        "details": [
+          "Study electronics, signals, machines, and digital logic.",
+          "Practice simulation software and breadboard prototyping.",
+          "Work on simple IoT and automation mini-projects."
+        ]
+      },
+      {
+        "phase": "Year 3",
+        "title": "Explore specialization",
+        "details": [
+          "Choose among power, control systems, embedded systems, telecom, or robotics.",
+          "Take industry visits, technical workshops, and certifications.",
+          "Create project demos using sensors, controllers, or communication modules."
+        ]
+      },
+      {
+        "phase": "Year 4",
+        "title": "Prepare for professional roles",
+        "details": [
+          "Develop a strong final year project with real-world application.",
+          "Practice viva, technical interviews, and report writing.",
+          "Apply for trainee engineer, field engineer, or automation roles."
+        ]
+      }
+    ],
+    "skills": ["Circuit Design", "Troubleshooting", "Simulation", "Embedded Basics", "Technical Documentation"],
+    "tools": ["MATLAB", "Proteus", "Multisim", "Arduino IDE", "AutoCAD Electrical"],
+    "courses": ["Power Electronics", "Control Systems", "Microprocessors", "Telecommunication Engineering"],
+    "roles": ["Trainee Engineer", "Embedded Engineer", "Power System Engineer", "Automation Engineer", "Field Engineer"]
+  },
+  {
+    "id": "english",
+    "title": "English & Communication",
+    "intro": "A roadmap for students who want careers in writing, teaching, media, communication, content strategy, and research.",
+    "stages": [
+      {
+        "phase": "Year 1",
+        "title": "Build language mastery",
+        "details": [
+          "Improve grammar, composition, reading comprehension, and public speaking.",
+          "Read literature, essays, and academic texts regularly.",
+          "Start a writing habit through blogs, journals, or reviews."
+        ]
+      },
+      {
+        "phase": "Year 2",
+        "title": "Practice communication professionally",
+        "details": [
+          "Study linguistics, creative writing, and rhetoric.",
+          "Work on presentation, editing, and critical analysis.",
+          "Participate in debate clubs, publications, or event hosting."
+        ]
+      },
+      {
+        "phase": "Year 3",
+        "title": "Choose your direction",
+        "details": [
+          "Explore teaching, research, journalism, content writing, or public relations.",
+          "Build writing samples and communication portfolios.",
+          "Take internships in schools, agencies, media houses, or editorial teams."
+        ]
+      },
+      {
+        "phase": "Year 4",
+        "title": "Launch your career",
+        "details": [
+          "Prepare for teaching demos, writing tests, and interviews.",
+          "Refine your CV and create a digital portfolio of work.",
+          "Apply for roles in education, media, publishing, or corporate communication."
+        ]
+      }
+    ],
+    "skills": ["Writing", "Editing", "Presentation", "Research", "Critical Thinking", "Public Speaking"],
+    "tools": ["Google Docs", "Canva", "Grammarly", "MS Word", "PowerPoint"],
+    "courses": ["Creative Writing", "Linguistics", "Communication Studies", "Research Methodology"],
+    "roles": ["Content Writer", "Lecturer", "Editor", "PR Executive", "Research Assistant"]
+  }
+]

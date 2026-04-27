@@ -1,0 +1,29 @@
+[
+  {
+    "id": "FB-1001",
+    "department": "CSE",
+    "courseCode": "CSE-221",
+    "courseTitle": "Data Structures",
+    "rating": 5,
+    "message": "The lab tasks were practical and helped me understand linked lists and trees clearly.",
+    "createdAt": "2026-03-19T07:00:00.000Z"
+  },
+  {
+    "id": "FB-1002",
+    "department": "BBA",
+    "courseCode": "MKT-201",
+    "courseTitle": "Marketing Management",
+    "rating": 4,
+    "message": "The case studies were useful, but more real brand examples would make classes better.",
+    "createdAt": "2026-03-21T09:30:00.000Z"
+  },
+  {
+    "id": "FB-1003",
+    "department": "EEE",
+    "courseCode": "EEE-310",
+    "courseTitle": "Control Systems",
+    "rating": 4,
+    "message": "The theory part was strong. More simulation demonstrations would improve understanding.",
+    "createdAt": "2026-03-22T06:45:00.000Z"
+  }
+]

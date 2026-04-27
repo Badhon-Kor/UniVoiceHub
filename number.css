@@ -1,0 +1,98 @@
+
+/* script.js */
+const symbols = ['🍎','🍌','🍇','🍒','🍉','🍍','🥝','🍑'];
+let cards = [];
+let flippedCards = [];
+let moves = 0;
+let matched = 0;
+let timer = 0;
+let interval;
+
+const grid = document.getElementById('grid');
+const movesEl = document.getElementById('moves');
+const timerEl = document.getElementById('timer');
+
+function shuffle(array) {
+  return array.sort(() => Math.random() - 0.5);
+}
+
+function startTimer() {
+  interval = setInterval(() => {
+    timer++;
+    timerEl.textContent = timer;
+  }, 1000);
+}
+
+function createBoard() {
+  grid.innerHTML = '';
+  cards = shuffle([...symbols, ...symbols]);
+  cards.forEach((symbol, index) => {
+    const card = document.createElement('div');
+    card.classList.add('card');
+    card.dataset.symbol = symbol;
+
+    card.innerHTML = `
+      <div class="card-inner">
+        <div class="card-front"></div>
+        <div class="card-back">${symbol}</div>
+      </div>
+    `;
+
+    card.addEventListener('click', () => handleFlip(card));
+    grid.appendChild(card);
+  });
+}
+
+function handleFlip(card) {
+  if (flippedCards.length === 2 || card.classList.contains('flip')) return;
+
+  if (moves === 0 && flippedCards.length === 0) startTimer();
+
+  card.classList.add('flip');
+  flippedCards.push(card);
+
+  if (flippedCards.length === 2) {
+    moves++;
+    movesEl.textContent = moves;
+    checkMatch();
+  }
+}
+
+function checkMatch() {
+  const [card1, card2] = flippedCards;
+  if (card1.dataset.symbol === card2.dataset.symbol) {
+    matched++;
+    flippedCards = [];
+    if (matched === 8) endGame();
+  } else {
+    setTimeout(() => {
+      card1.classList.remove('flip');
+      card2.classList.remove('flip');
+      flippedCards = [];
+    }, 1000);
+  }
+}
+
+function endGame() {
+  clearInterval(interval);
+  document.getElementById('result-text').textContent = `Moves: ${moves}, Time: ${timer}s`;
+  document.getElementById('result-modal').classList.remove('hidden');
+}
+
+function restartGame() {
+  moves = 0;
+  matched = 0;
+  timer = 0;
+  flippedCards = [];
+  clearInterval(interval);
+  movesEl.textContent = 0;
+  timerEl.textContent = 0;
+  document.getElementById('result-modal').classList.add('hidden');
+  createBoard();
+}
+function goHome() {
+  window.location.href = "home.html"; 
+}
+document.getElementById('restart').addEventListener('click', restartGame);
+
+createBoard();

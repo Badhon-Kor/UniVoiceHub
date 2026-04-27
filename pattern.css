@@ -1,0 +1,21 @@
+{
+  "name": "univoice-hub",
+  "version": "1.0.0",
+  "description": "UniVoice Hub - integrated student support and feedback platform",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": [
+    "university",
+    "lost-and-found",
+    "career-guidance",
+    "anonymous-feedback"
+  ],
+  "author": "OpenAI",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}

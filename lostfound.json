@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>UniVoice Hub</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="bg-orb orb-1"></div>
+    <div class="bg-orb orb-2"></div>
+    <div class="bg-grid"></div>
+
+    <header class="site-header">
+      <div class="container nav-wrap">
+        <a href="#home" class="brand">
+          <span class="brand-mark">U</span>
+          <div>
+            <strong>UniVoice Hub</strong>
+            <small>Student Support Platform</small>
+          </div>
+        </a>
+
+        <nav class="nav-links">
+          <a href="#lost-found">Lost & Found</a>
+          <a href="#career">Career Guidance</a>
+          <a href="#feedback">Anonymous Feedback</a>
+          
+          <div class="dropdown">
+            <a href="home.html" class="dropbtn">Entertainment ▼</a>
+            <div class="dropdown-content">
+              <a href="home.html" class="game-link">🎮 Game Hub Home</a>
+              <a href="memory.html" class="game-link">🧠 Memory Test</a>
+              <a href="number.html" class="game-link">🔢 Number Sequence</a>
+              <a href="quiz.html" class="game-link">❓ Knowledge Quiz</a>
+              <a href="target.html" class="game-link">🎯 Target Click</a>
+              <a href="word.html" class="game-link">🔤 Word Scramble</a>
+              <a href="pattern.html" class="game-link">💠 Pattern Recall</a>
+            </div>
+          </div>
+        </nav>
+
+        <a href="#lost-found" class="btn btn-primary nav-cta">Start Now</a>
+      </div>
+    </header>
+
+    <main id="home">
+      <section class="hero section">
+        <div class="container hero-grid">
+          <div class="hero-copy">
+            <span class="eyebrow">Integrated University Support</span>
+            <h1>One platform for lost items, career planning, and honest academic feedback.</h1>
+            <p>
+              UniVoice Hub helps students recover belongings, explore future career paths,
+              and share anonymous course feedback in a simple, modern, and student-friendly interface.
+            </p>
+            <div class="hero-actions">
+              <a class="btn btn-primary" href="#lost-found">Explore Modules</a>
+              <a class="btn btn-secondary" href="#feedback">Give Feedback</a>
+              <!-- <button class="btn btn-ghost" id="openGamesModal">🎮 Entertainment</button> -->
+            </div>
+            <div class="hero-badges">
+              <span>Responsive UI</span>
+              <span>Dynamic Data</span>
+              <span>Full Stack Ready</span>
+            </div>
+          </div>
+
+          <div class="hero-panel glass-card">
+            <div class="mini-panel-header">
+              <span class="live-dot"></span>
+              <span>Campus Overview</span>
+            </div>
+             <div class="stats-grid" id="statsGrid">
+              <article class="stat-card"><h3 id="statOpenCases">0</h3><p>Open Cases</p></article>
+              <article class="stat-card"><h3 id="statFoundPosts">0</h3><p>Found Posts</p></article>
+              <article class="stat-card"><h3 id="statCareerPaths">0</h3><p>Career Paths</p></article>
+              <article class="stat-card"><h3 id="statFeedbackCount">0</h3><p>Feedback Entries</p></article>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section features-overview">
+        <div class="container section-heading center">
+          <span class="section-tag">Project Modules</span>
+          <h2>Everything students need in one connected platform</h2>
+          <p>Instead of using separate tools, UniVoice Hub brings student support, career development, and academic quality improvement into a single experience.</p>
+        </div>
+        <div class="container feature-grid">
+          <article class="feature-card glass-card">
+            <div class="icon-wrap">📦</div>
+            <h3>Campus Lost & Found</h3>
+            <p>Post lost or found items, search reports, filter by category, and track current status.</p>
+          </article>
+          <article class="feature-card glass-card">
+            <div class="icon-wrap">🎯</div>
+            <h3>Career Path Guidance</h3>
+            <p>Choose your department and view structured roadmaps, skills, tools, and career roles.</p>
+          </article>
+          <article class="feature-card glass-card">
+            <div class="icon-wrap">🕶️</div>
+            <h3>Anonymous Feedback</h3>
+            <p>Submit course feedback without identity exposure and support continuous academic improvement.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="lost-found">
+        <div class="container section-heading">
+          <span class="section-tag">Module 01</span>
+          <h2>Campus Lost & Found</h2>
+        </div>
+        <div class="container module-layout">
+          <div class="glass-card form-card">
+            <div class="card-head">
+              <h3>Create a new post</h3>
+              <p>Fill in the details to help others locate the item quickly.</p>
+            </div>
+            <form id="lostFoundForm" class="app-form">
+              <div class="form-grid two-col">
+                <div class="input-group">
+                  <label for="lfType">Post Type</label>
+                  <select id="lfType" name="type" required><option value="lost">Lost Item</option><option value="found">Found Item</option></select>
+                </div>
+                <div class="input-group">
+                  <label for="lfCategory">Category</label>
+                  <select id="lfCategory" name="category" required><option value="Documents">Documents</option><option value="Electronics">Electronics</option><option value="Accessories">Accessories</option><option value="Books">Books</option><option value="Others">Others</option></select>
+                </div>
+              </div>
+              <div class="form-grid two-col">
+                <div class="input-group"><label for="lfTitle">Item Title</label><input id="lfTitle" name="title" type="text" required /></div>
+                <div class="input-group"><label for="lfDate">Date</label><input id="lfDate" name="date" type="date" required /></div>
+              </div>
+              <div class="form-grid two-col">
+                <div class="input-group"><label for="lfLocation">Location</label><input id="lfLocation" name="location" type="text" required /></div>
+                <div class="input-group"><label for="lfContact">Contact</label><input id="lfContact" name="contact" type="text" required /></div>
+              </div>
+              <div class="input-group">
+                <label for="lfDescription">Description</label>
+                <textarea id="lfDescription" name="description" rows="4" required></textarea>
+              </div>
+              <button class="btn btn-primary full-width" type="submit">Submit Lost/Found Post</button>
+              <p class="form-message" id="lostFoundMessage"></p>
+            </form>
+          </div>
+          <div class="glass-card content-card">
+            <div class="card-head split-head">
+              <div><h3>Browse current reports</h3></div>
+              <span class="count-pill"><span id="lostFoundCount">0</span> posts</span>
+            </div>
+            <div class="toolbar">
+              <div class="input-group search-box"><input id="searchLostFound" type="text" placeholder="Search..." /></div>
+              <div class="filter-row">
+                <select id="filterType"><option value="all">All Types</option><option value="lost">Lost</option><option value="found">Found</option></select>
+                <select id="filterCategory"><option value="all">All Categories</option><option value="Documents">Documents</option><option value="Electronics">Electronics</option><option value="Accessories">Accessories</option><option value="Books">Books</option><option value="Others">Others</option></select>
+              </div>
+            </div>
+            <div id="lostFoundList" class="card-list"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="career">
+        <div class="container section-heading">
+          <span class="section-tag">Module 02</span>
+          <h2>Career Path Guidance</h2>
+        </div>
+        <div class="container module-layout career-layout">
+          <div class="glass-card form-card slim-card">
+            <div class="card-head"><h3>Choose your department</h3></div> <div class="input-group">
+                  <label for="fbDepartment">Department</label><br><br>
+                  <select id="fbDepartment" name="department" required>
+                    <option value="CSE">CSE</option>
+                    <option value="ECE">ECE</option>
+                    <option value="EEE">EEE</option>
+                    <option value="ETE">ETE</option>
+                    <option value="CE">CE</option>
+                    <option value="ME">ME</option>
+                    <option value="ChE">ChE</option>
+                    <option value="MSE">MSE</option>
+                    <option value="CME">CME</option>
+                    <option value="MTE">MTE</option>
+                    <option value="BECM">BECM</option>
+                    <option value="URP">URP</option>
+                    <option value="ARCHITRCTURE">ARCHITRCTURE</option></select>
+                </div><br><br><br>
+            <!-- <div class="input-group"><select id="careerSelect"></select></div> -->
+            <button id="careerButton" class="btn btn-primary full-width" type="button">Show Career Roadmap</button>
+          </div>
+          <div class="glass-card content-card roadmap-card">
+            <div class="card-head split-head">
+              <div><h3 id="roadmapTitle">Career roadmap</h3><p id="roadmapIntro">Select a department.</p></div>
+            </div><br><br>
+            <div id="roadmapTimeline" class="timeline"></div>
+            <div class="roadmap-extra-grid">
+              <article class="mini-info-panel"><h4>Core Skills</h4><div id="roadmapSkills" class="tag-group"></div></article>
+              <article class="mini-info-panel"><h4>Recommended Tools</h4><div id="roadmapTools" class="tag-group"></div></article>
+              <article class="mini-info-panel"><h4>Suggested Courses</h4><div id="roadmapCourses" class="tag-group"></div></article>
+              <article class="mini-info-panel"><h4>Potential Roles</h4><div id="roadmapRoles" class="tag-group"></div></article>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="feedback">
+        <div class="container section-heading">
+          <span class="section-tag">Module 03</span>
+          <h2>Anonymous Academic Feedback</h2>
+        </div>
+        <div class="container module-layout">
+          <div class="glass-card form-card">
+            <div class="card-head"><h3>Submit feedback anonymously</h3></div>
+            <form id="feedbackForm" class="app-form">
+              <div class="form-grid two-col">
+                <div class="input-group">
+                  <label for="fbDepartment">Department</label>
+                    <select id="fbDepartment" name="department" required>
+                    <option value="CSE">CSE</option>
+                    <option value="ECE">ECE</option>
+                    <option value="EEE">EEE</option>
+                    <option value="ETE">ETE</option>
+                    <option value="CE">CE</option>
+                    <option value="ME">ME</option>
+                    <option value="ChE">ChE</option>
+                    <option value="MSE">MSE</option>
+                    <option value="CME">CME</option>
+                    <option value="MTE">MTE</option>
+                    <option value="BECM">BECM</option>
+                    <option value="URP">URP</option>
+                    <option value="ARCHITRCTURE">ARCHITRCTURE</option></select> </div>
+                <div class="input-group">
+                  <label for="fbRating">Rating</label>
+                  <select id="fbRating" name="rating" required><option value="5">5</option><option value="4">4</option><option value="3">3</option><option value="2">2</option><option value="1">1</option></select>
+                </div>
+              </div>
+              <div class="form-grid two-col">
+                <div class="input-group"><input id="fbCourseCode" name="courseCode" type="text" placeholder="Course Code" required /></div>
+                <div class="input-group"><input id="fbCourseTitle" name="courseTitle" type="text" placeholder="Course Title" required /></div>
+              </div>
+              <div class="input-group">
+                <textarea id="fbMessage" name="message" rows="5" placeholder="Write feedback..." required></textarea>
+              </div>
+              <button class="btn btn-primary full-width" type="submit">Submit Feedback</button>
+              <p class="form-message" id="feedbackMessage"></p>
+            </form>
+          </div>
+          <div class="glass-card content-card">
+            <div class="card-head split-head"><div><h3>Feedback summary</h3></div></div>
+            <div class="feedback-summary-grid">
+              <article class="summary-card"><h4 id="summaryAverage">0.0</h4><p>Average Rating</p></article>
+              <article class="summary-card"><h4 id="summaryTotal">0</h4><p>Total Responses</p></article>
+              <article class="summary-card wide-card"><h4 id="summaryTopCourse">No data yet</h4><p>Top Rated Course</p></article>
+            </div>
+            <div id="feedbackList" class="card-list feedback-list"></div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-wrap">
+        <div><h3>UniVoice Hub</h3></div>
+      </div>
+    </footer>
+
+    <div id="gamesModal" class="modal-overlay hidden">
+      <div class="glass-card modal-content">
+        <div class="modal-header">
+          <h3>🎮 Choose a Game</h3>
+          <button id="closeGamesModal" class="btn-close">&times;</button>
+        </div>
+        <p class="modal-desc">Take a break from your studies and challenge your brain!</p>
+        <div class="modal-games-grid">
+          <a href="games/memory.html" class="game-link-btn">🧠 Memory Test</a>
+          <a href="games/number.html" class="game-link-btn">🔢 Number Sequence</a>
+          <a href="games/quiz.html" class="game-link-btn">❓ Knowledge Quiz</a>
+          <a href="games/target.html" class="game-link-btn">🎯 Target Click</a>
+          <a href="games/word.html" class="game-link-btn">🔤 Word Scramble</a>
+          <a href="games/pattern.html" class="game-link-btn">💠 Pattern Recall</a>
+        </div>
+      </div></div>
+
+<footer class="site-footer">
+  <div class="container footer-container">
+
+    <div class="footer-column">
+      <h3>UniVoice Hub</h3>
+      <p>
+        A unified platform for student support including lost & found,
+        career guidance, and anonymous academic feedback.
+      </p>
+    </div>
+
+    <div class="footer-column">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="#lost-found">Lost & Found</a></li>
+        <li><a href="#career">Career Guidance</a></li>
+        <li><a href="#feedback">Feedback</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-column">
+      <h4>Entertainment</h4>
+      <ul>
+        <li><a href="home.html">Game Hub</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-column">
+      <h4>Supervisor</h4>
+      <p class="footer-name">Md. Abu Hanif Pramanik</p>
+
+      <h4 class="mt">Developers</h4>
+      <ul class="dev-list">
+        <li>Fahim Shahriar Shishir</li>
+        <li>Badhon Kor</li>
+        <li>Md. Miaraz</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <div class="footer-bottom">
+    <p>© 2026 UniVoice Hub. All rights reserved.</p>
+  </div>
+</footer>
+    <script src="script.js"></script>
+  </body>
+</html>
